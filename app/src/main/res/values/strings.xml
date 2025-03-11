@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name" translatable="false">My JC Application</string>
+    <string name="balance_prefix">Balance: </string>
+</resources>
