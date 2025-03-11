@@ -33,5 +33,5 @@ fun ExchangeCardButton(
 
 enum class ButtonVariant {
     Normal,
-    Filled,
+    Filled
 }

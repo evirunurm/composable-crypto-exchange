@@ -4,13 +4,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.quinientoscuarenta.myjcapplication.R
-import com.quinientoscuarenta.myjcapplication.ui.theme.Grey
 
 
 @Composable
@@ -39,7 +41,7 @@ fun ExchangeCard(
 ) {
     Column(
         modifier = modifier
-            .background(Grey, shape = RoundedCornerShape(32.dp))
+            .background(colorScheme.tertiary, shape = RoundedCornerShape(32.dp))
             .padding(8.dp)
     ) {
         ExchangeCardHeader(
@@ -75,9 +77,15 @@ fun ExchangeCardFooter(
         modifier = modifier.padding(0.dp, 0.dp, 0.dp, 21.dp)
     ) {
         Text(
-            text = stringResource(id = R.string.balance_prefix) + " " + coinBalance,
-            fontWeight = FontWeight.W500,
-            fontSize = 12.sp
+            text = stringResource(id = R.string.balance_prefix) + " ",
+            fontWeight = FontWeight.W400,
+            fontSize = 14.sp,
+            modifier = Modifier.alpha(0.5f)
+        )
+        Text(
+            text = coinBalance,
+            fontWeight = FontWeight.W400,
+            fontSize = 14.sp
         )
     }
 }
@@ -88,12 +96,12 @@ fun ExchangeCardContent(
     modifier: Modifier = Modifier,
     button: @Composable (Modifier) -> Unit = {}
 ) {
-    ConstraintLayout(modifier = modifier.padding(16.dp)) {
+    ConstraintLayout(modifier = modifier.padding(0.dp, 16.dp)) {
         val (coinValueRef, buttonRef) = createRefs()
         Text(
             coinValue,
             fontWeight = FontWeight.W500,
-            fontSize = 32.sp,
+            fontSize = 36.sp,
             modifier = Modifier.constrainAs(coinValueRef) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
@@ -125,7 +133,7 @@ fun ExchangeCardHeader(
             contentDescription = coinName,
             modifier = Modifier
                 .background(Color.White, shape = CircleShape)
-                .padding(12.dp)
+                .padding(18.dp)
                 .constrainAs(iconRef) {
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
@@ -153,7 +161,8 @@ fun ExchangeCardTitle(
     modifier: Modifier = Modifier
 ) {
     Row(modifier) {
-        Text(coinName, fontWeight = FontWeight.SemiBold, fontSize = 20.sp)
+        Text(coinName, fontWeight = FontWeight.Normal, fontSize = 28.sp)
+        Spacer(Modifier.width(8.dp))
         Icon(
             imageVector = Icons.Rounded.KeyboardArrowDown,
             contentDescription = coinName,
