@@ -37,5 +37,4 @@ fun Header(
         }
         Text(text = title, modifier = Modifier.align(Alignment.Center))
     }
-
 }

@@ -44,16 +44,18 @@ class MainActivity : ComponentActivity() {
                             coinName = "BTH",
                             coinValue = "0,6948",
                             coinBalance = "0.6948 ETH",
-                            mainButton = {
+                            mainButton = { modifier ->
                                 ExchangeCardButton(
                                     text = "Send",
-                                    onClick = { /*TODO*/ }
+                                    onClick = { /*TODO*/ },
+                                    modifier = modifier
                                 )
                             },
-                            secondaryButton = {
+                            secondaryButton = { modifier ->
                                 ExchangeCardButton(
                                     text = "Max",
-                                    onClick = { /*TODO*/ }
+                                    onClick = { /*TODO*/ },
+                                    modifier = modifier
                                 )
                             }
                         )

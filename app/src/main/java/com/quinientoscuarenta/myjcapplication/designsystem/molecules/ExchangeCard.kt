@@ -35,7 +35,7 @@ fun ExchangeCard(
     coinBalance: String,
     modifier: Modifier = Modifier,
     mainButton: @Composable (Modifier) -> Unit = {},
-    secondaryButton: @Composable () -> Unit = {}
+    secondaryButton: @Composable (Modifier) -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -45,12 +45,17 @@ fun ExchangeCard(
         ExchangeCardHeader(
             coinName = coinName,
             coinImageVector = coinImageVector,
-            button = mainButton
+            button = { modifier ->
+                mainButton(modifier)
+            },
+            modifier = Modifier.fillMaxWidth()
         )
         ExchangeCardContent(
             coinValue = coinValue,
             modifier = Modifier.fillMaxWidth(),
-            button = secondaryButton
+            button = { modifier ->
+                secondaryButton(modifier)
+            }
         )
         ExchangeCardFooter(
             coinBalance = coinBalance,
@@ -81,19 +86,28 @@ fun ExchangeCardFooter(
 fun ExchangeCardContent(
     coinValue: String,
     modifier: Modifier = Modifier,
-    button: @Composable () -> Unit = {}
+    button: @Composable (Modifier) -> Unit = {}
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
-        modifier = modifier.padding(16.dp)
-    ) {
+    ConstraintLayout(modifier = modifier.padding(16.dp)) {
+        val (coinValueRef, buttonRef) = createRefs()
         Text(
             coinValue,
             fontWeight = FontWeight.W500,
-            fontSize = 28.sp
+            fontSize = 32.sp,
+            modifier = Modifier.constrainAs(coinValueRef) {
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
         )
-        button()
+        button(
+            Modifier.constrainAs(buttonRef) {
+                end.linkTo(parent.end)
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+            }
+        )
     }
 }
 
@@ -102,7 +116,7 @@ fun ExchangeCardHeader(
     coinName: String,
     coinImageVector: ImageVector,
     modifier: Modifier = Modifier,
-    button: @Composable (Modifier) -> Unit = {}
+    button: @Composable (modifier: Modifier) -> Unit = {}
 ) {
     ConstraintLayout(modifier = modifier) {
         val (iconRef, titleRef, buttonRef) = createRefs()
@@ -125,9 +139,11 @@ fun ExchangeCardHeader(
                 bottom.linkTo(parent.bottom)
             }
         )
-        button(Modifier.constrainAs(buttonRef) {
-            end.linkTo(parent.end)
-        })
+        button(
+            Modifier.constrainAs(buttonRef) {
+                end.linkTo(parent.end)
+            }
+        )
     }
 }
 
