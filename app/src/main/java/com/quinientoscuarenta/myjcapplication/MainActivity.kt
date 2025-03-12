@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -18,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import com.quinientoscuarenta.myjcapplication.molecules.Header
 import com.quinientoscuarenta.myjcapplication.organisms.CoinExchangeCalculator
 import com.quinientoscuarenta.myjcapplication.organisms.ExchangeCoin
-import com.quinientoscuarenta.myjcapplication.templates.PageTemplate
 import com.quinientoscuarenta.myjcapplication.ui.theme.MyJCApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,22 +39,20 @@ class MainActivity : ComponentActivity() {
                         coinImageVector = Icons.Default.AccountBox
                     )
                 )
-
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    PageTemplate {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(innerPadding)
-                        ) {
-                            Header(
-                                "Exchange",
-                                onButtonClick = { /*TODO*/ },
-                            )
-                            Spacer(Modifier.height(18.dp))
-                            CoinExchangeCalculator(coins)
-                        }
+                Scaffold { innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .padding(horizontal = 8.dp)
+                    ) {
+                        Header(
+                            "Exchange",
+                            onButtonClick = { /*TODO*/ },
+                        )
+                        Spacer(Modifier.height(18.dp))
+                        CoinExchangeCalculator(coins)
                     }
+
                 }
             }
         }
