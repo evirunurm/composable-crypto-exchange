@@ -1,21 +1,24 @@
-package com.quinientoscuarenta.myjcapplication.organisms
+package com.quinientoscuarenta.myjcapplication.ui.organisms
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.quinientoscuarenta.myjcapplication.R
-import com.quinientoscuarenta.myjcapplication.molecules.ExchangeCard
-import com.quinientoscuarenta.myjcapplication.molecules.ExchangeCardAction
+import com.quinientoscuarenta.myjcapplication.ui.atoms.CircularButton
+import com.quinientoscuarenta.myjcapplication.ui.atoms.JCButton
+import com.quinientoscuarenta.myjcapplication.ui.atoms.JCText
+import com.quinientoscuarenta.myjcapplication.ui.molecules.ExchangeCard
+import com.quinientoscuarenta.myjcapplication.ui.molecules.ExchangeCardAction
+import com.quinientoscuarenta.myjcapplication.ui.theme.CustomTheme
 
 @Composable
 fun CoinExchangeCalculator(
@@ -44,7 +47,7 @@ fun CoinExchangeCalculator(
     )
 
     ConstraintLayout {
-        val (coin1Card, backButton, coin2Card) = createRefs()
+        val (coin1Card, backButton, coin2Card, exchangeButton, SummaryCard) = createRefs()
 
         ExchangeCard(
             coinName = coin1.name,
@@ -66,23 +69,34 @@ fun CoinExchangeCalculator(
                 top.linkTo(coin1Card.bottom, 8.dp)
             },
         )
-        IconButton(
+        CircularButton(
             onClick = { /*TODO: Logic to switch places the coins. */ },
-            modifier = Modifier
-                .background(shape = CircleShape, color = colorScheme.onTertiary)
-                .padding(8.dp)
-                .constrainAs(backButton) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                }
+            modifier = Modifier.constrainAs(backButton) {
+                start.linkTo(coin1Card.start)
+                end.linkTo(coin2Card.end)
+                top.linkTo(coin1Card.top)
+                bottom.linkTo(coin2Card.bottom)
+            },
+            colors = IconButtonDefaults.iconButtonColors(
+                containerColor = CustomTheme.colors.foregroundTop
+            )
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_exchange_alt),
                 tint = Color.White,
                 contentDescription = "Switch",
+                modifier = Modifier
+                    .size(24.dp)
+                    .rotate(90f)
             )
+        }
+        JCButton(
+            onClick = {},
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(exchangeButton) { top.linkTo(coin2Card.bottom, 8.dp) }
+        ) {
+            JCText("Exchange")
         }
     }
 }

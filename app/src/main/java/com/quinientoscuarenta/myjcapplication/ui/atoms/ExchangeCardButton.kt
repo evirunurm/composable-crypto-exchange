@@ -1,14 +1,15 @@
-package com.quinientoscuarenta.myjcapplication.atoms
+package com.quinientoscuarenta.myjcapplication.ui.atoms
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.quinientoscuarenta.myjcapplication.ui.theme.CustomTheme
 
+// TODO: Isolate this into a JKButton
 @Composable
 fun ExchangeCardButton(
     text: String,
@@ -18,14 +19,16 @@ fun ExchangeCardButton(
 ) {
     val border = if (variant == ButtonVariant.Filled) null else BorderStroke(
         1.dp,
-        MaterialTheme.colorScheme.onTertiary.copy(alpha = 0.5f)
+        MaterialTheme.colorScheme.onTertiary.copy(alpha = 0.1f)
     )
     val containerColor =
-        if (variant == ButtonVariant.Filled) MaterialTheme.colorScheme.onSecondary
-        else MaterialTheme.colorScheme.tertiary
+        if (variant == ButtonVariant.Filled) CustomTheme.colors.positive.run {
+            copy(alpha = 0.2f)
+        }
+        else CustomTheme.colors.foregroundMid
     val contentColor =
-        if (variant == ButtonVariant.Filled) MaterialTheme.colorScheme.secondary
-        else MaterialTheme.colorScheme.onTertiary
+        if (variant == ButtonVariant.Filled) CustomTheme.colors.positive
+        else CustomTheme.colors.font
 
     OutlinedButton(
         onClick,
@@ -36,7 +39,7 @@ fun ExchangeCardButton(
             contentColor = contentColor
         )
     ) {
-        Text(text = text, color = contentColor)
+        JCText(text = text, color = contentColor)
     }
 }
 

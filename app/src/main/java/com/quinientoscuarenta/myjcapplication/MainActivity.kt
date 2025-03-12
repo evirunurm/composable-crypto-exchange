@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -14,17 +16,19 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.quinientoscuarenta.myjcapplication.molecules.Header
-import com.quinientoscuarenta.myjcapplication.organisms.CoinExchangeCalculator
-import com.quinientoscuarenta.myjcapplication.organisms.ExchangeCoin
-import com.quinientoscuarenta.myjcapplication.ui.theme.MyJCApplicationTheme
+import com.quinientoscuarenta.myjcapplication.ui.molecules.Header
+import com.quinientoscuarenta.myjcapplication.ui.organisms.CoinExchangeCalculator
+import com.quinientoscuarenta.myjcapplication.ui.organisms.ExchangeCoin
+import com.quinientoscuarenta.myjcapplication.ui.theme.CustomTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyJCApplicationTheme {
+            // Encapsulate the page in a Custom theme provider. Similar to how React Context works.
+            CustomTheme {
+                // This app data is just to give a use example.
                 val coins: Array<ExchangeCoin> = arrayOf(
                     ExchangeCoin(
                         name = "ETH",
@@ -39,20 +43,26 @@ class MainActivity : ComponentActivity() {
                         coinImageVector = Icons.Default.AccountBox
                     )
                 )
-                Scaffold { innerPadding ->
+                // Scaffold is a pre-built layout that follows Material Design guidelines.
+                // Here we're using it to get the inner padding of the screen.
+                Scaffold() { innerPadding ->
                     Column(
+                        // Setup basic page styling.
                         modifier = Modifier
+                            .fillMaxSize()
+                            // Set background to theme background color
+                            .background(CustomTheme.colors.background)
+                            // Set inner padding passed by Scaffold,
+                            // so that the content is not drawn under the status bar.
                             .padding(innerPadding)
-                            .padding(horizontal = 8.dp)
+                            // Add some padding near the edges of the screen.
+                            .padding(8.dp, 12.dp)
                     ) {
-                        Header(
-                            "Exchange",
-                            onButtonClick = { /*TODO*/ },
-                        )
+                        // Not using the AppBar provided by Scaffold, because the second page of the reference doesn't have it.
+                        Header("Exchange", onButtonClick = { /*TODO*/ })
                         Spacer(Modifier.height(18.dp))
                         CoinExchangeCalculator(coins)
                     }
-
                 }
             }
         }
