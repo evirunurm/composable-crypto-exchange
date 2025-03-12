@@ -1,4 +1,4 @@
-package com.quinientoscuarenta.myjcapplication.designsystem.molecules
+package com.quinientoscuarenta.myjcapplication.molecules
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.quinientoscuarenta.myjcapplication.R
+import com.quinientoscuarenta.myjcapplication.atoms.ButtonVariant
+import com.quinientoscuarenta.myjcapplication.atoms.ExchangeCardButton
 
+data class ExchangeCardAction(
+    val description: String,
+    val action: () -> Unit,
+    val primary: Boolean = true
+)
 
 @Composable
 fun ExchangeCard(
@@ -36,9 +43,30 @@ fun ExchangeCard(
     coinValue: String,
     coinBalance: String,
     modifier: Modifier = Modifier,
-    mainButton: @Composable (Modifier) -> Unit = {},
-    secondaryButton: @Composable (Modifier) -> Unit = {}
+    actions: List<ExchangeCardAction> = listOf()
 ) {
+    val primaryButton: @Composable ((Modifier) -> Unit)? = actions.firstOrNull { it.primary }?.let {
+        @Composable { modifier: Modifier ->
+            ExchangeCardButton(
+                text = it.description,
+                onClick = it.action,
+                modifier = modifier
+            )
+        }
+    }
+
+    val secondaryButton: @Composable ((Modifier) -> Unit)? =
+        actions.firstOrNull { !it.primary }?.let {
+            @Composable { modifier: Modifier ->
+                ExchangeCardButton(
+                    text = it.description,
+                    onClick = it.action,
+                    variant = ButtonVariant.Filled,
+                    modifier = modifier
+                )
+            }
+        }
+
     Column(
         modifier = modifier
             .background(colorScheme.tertiary, shape = RoundedCornerShape(32.dp))
@@ -47,17 +75,13 @@ fun ExchangeCard(
         ExchangeCardHeader(
             coinName = coinName,
             coinImageVector = coinImageVector,
-            button = { modifier ->
-                mainButton(modifier)
-            },
+            button = primaryButton,
             modifier = Modifier.fillMaxWidth()
         )
         ExchangeCardContent(
             coinValue = coinValue,
             modifier = Modifier.fillMaxWidth(),
-            button = { modifier ->
-                secondaryButton(modifier)
-            }
+            button = secondaryButton
         )
         ExchangeCardFooter(
             coinBalance = coinBalance,
@@ -94,7 +118,7 @@ fun ExchangeCardFooter(
 fun ExchangeCardContent(
     coinValue: String,
     modifier: Modifier = Modifier,
-    button: @Composable (Modifier) -> Unit = {}
+    button: @Composable ((Modifier) -> Unit)? = {}
 ) {
     ConstraintLayout(modifier = modifier.padding(0.dp, 16.dp)) {
         val (coinValueRef, buttonRef) = createRefs()
@@ -109,7 +133,7 @@ fun ExchangeCardContent(
                 end.linkTo(parent.end)
             }
         )
-        button(
+        button?.invoke(
             Modifier.constrainAs(buttonRef) {
                 end.linkTo(parent.end)
                 top.linkTo(parent.top)
@@ -124,7 +148,7 @@ fun ExchangeCardHeader(
     coinName: String,
     coinImageVector: ImageVector,
     modifier: Modifier = Modifier,
-    button: @Composable (modifier: Modifier) -> Unit = {}
+    button: @Composable ((Modifier) -> Unit)? = {}
 ) {
     ConstraintLayout(modifier = modifier) {
         val (iconRef, titleRef, buttonRef) = createRefs()
@@ -147,7 +171,7 @@ fun ExchangeCardHeader(
                 bottom.linkTo(parent.bottom)
             }
         )
-        button(
+        button?.invoke(
             Modifier.constrainAs(buttonRef) {
                 end.linkTo(parent.end)
             }

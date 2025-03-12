@@ -10,13 +10,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.quinientoscuarenta.myjcapplication.atoms.ExchangeCardButton
-import com.quinientoscuarenta.myjcapplication.designsystem.molecules.ExchangeCard
-import com.quinientoscuarenta.myjcapplication.designsystem.molecules.Header
+import com.quinientoscuarenta.myjcapplication.molecules.Header
+import com.quinientoscuarenta.myjcapplication.organisms.CoinExchangeCalculator
+import com.quinientoscuarenta.myjcapplication.organisms.ExchangeCoin
+import com.quinientoscuarenta.myjcapplication.templates.PageTemplate
 import com.quinientoscuarenta.myjcapplication.ui.theme.MyJCApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,37 +27,35 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyJCApplicationTheme {
+                val coins: Array<ExchangeCoin> = arrayOf(
+                    ExchangeCoin(
+                        name = "ETH",
+                        value = 0.6948,
+                        balance = 0.6948,
+                        coinImageVector = Icons.Default.AccountCircle
+                    ),
+                    ExchangeCoin(
+                        name = "BTH",
+                        value = 0.6948,
+                        balance = 0.6948,
+                        coinImageVector = Icons.Default.AccountBox
+                    )
+                )
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
-                    ) {
-                        Header(
-                            "Exchange",
-                            onButtonClick = { /*TODO*/ },
-                        )
-                        Spacer(Modifier.height(18.dp))
-                        ExchangeCard(
-                            coinImageVector = Icons.Default.AccountCircle,
-                            coinName = "BTH",
-                            coinValue = "0,6948",
-                            coinBalance = "0.6948 ETH",
-                            mainButton = { modifier ->
-                                ExchangeCardButton(
-                                    text = "Send",
-                                    onClick = { /*TODO*/ },
-                                    modifier = modifier
-                                )
-                            },
-                            secondaryButton = { modifier ->
-                                ExchangeCardButton(
-                                    text = "Max",
-                                    onClick = { /*TODO*/ },
-                                    modifier = modifier
-                                )
-                            }
-                        )
+                    PageTemplate {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(innerPadding)
+                        ) {
+                            Header(
+                                "Exchange",
+                                onButtonClick = { /*TODO*/ },
+                            )
+                            Spacer(Modifier.height(18.dp))
+                            CoinExchangeCalculator(coins)
+                        }
                     }
                 }
             }

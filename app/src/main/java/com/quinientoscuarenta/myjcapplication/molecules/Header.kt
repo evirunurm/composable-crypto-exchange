@@ -1,4 +1,4 @@
-package com.quinientoscuarenta.myjcapplication.designsystem.molecules
+package com.quinientoscuarenta.myjcapplication.molecules
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
