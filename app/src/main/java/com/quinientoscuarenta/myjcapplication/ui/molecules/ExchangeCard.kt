@@ -28,7 +28,7 @@ import com.quinientoscuarenta.myjcapplication.R
 import com.quinientoscuarenta.myjcapplication.ui.atoms.ButtonVariant
 import com.quinientoscuarenta.myjcapplication.ui.atoms.ExchangeCardButton
 import com.quinientoscuarenta.myjcapplication.ui.atoms.JCText
-import com.quinientoscuarenta.myjcapplication.ui.theme.CustomTheme
+import com.quinientoscuarenta.myjcapplication.ui.theme.GenuineTheme
 
 data class ExchangeCardAction(
     val description: String,
@@ -68,7 +68,7 @@ fun ExchangeCard(
 
     Column(
         modifier = modifier
-            .background(CustomTheme.colors.foregroundMid, shape = RoundedCornerShape(32.dp))
+            .background(GenuineTheme.colors.foregroundMid, shape = RoundedCornerShape(32.dp))
             .padding(8.dp)
     ) {
         ExchangeCardHeader(

@@ -5,14 +5,15 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.quinientoscuarenta.myjcapplication.R
 
-
+// We create the different
 @Immutable
-data class CustomColors(
+data class GenuineColors(
     val primary: Color,
     val font: Color,
     val positive: Color,
@@ -23,19 +24,24 @@ data class CustomColors(
 )
 
 @Immutable
-data class CustomTypography(
+data class GenuineTypography(
     val body: TextStyle,
     val title: TextStyle
 )
 
 @Immutable
-data class CustomElevation(
-    val default: Dp,
-    val pressed: Dp
-)
+class GenuineIcons {
+    val exchange: ImageVector
+        @Composable
+        get() = ImageVector.vectorResource(id = R.drawable.ic_exchange_alt)
 
-val LocalCustomColors = staticCompositionLocalOf {
-    CustomColors(
+    val backArrow: ImageVector
+        @Composable
+        get() = ImageVector.vectorResource(id = R.drawable.ic_exchange_alt)
+}
+
+val LocalGenuineColors = staticCompositionLocalOf {
+    GenuineColors(
         primary = Purple,
         font = White,
         positive = Green,
@@ -46,25 +52,21 @@ val LocalCustomColors = staticCompositionLocalOf {
     )
 }
 
-val LocalCustomTypography = staticCompositionLocalOf {
-    CustomTypography(
-        body = TextStyle.Default,
+val LocalGenuineTypography = staticCompositionLocalOf {
+    GenuineTypography(
+        body = Typography.bodyLarge,
         title = TextStyle.Default
     )
 }
 
-val LocalCustomElevation = staticCompositionLocalOf {
-    CustomElevation(
-        default = Dp.Unspecified,
-        pressed = Dp.Unspecified
-    )
-}
+internal val LocalGenuineIcons = staticCompositionLocalOf { GenuineIcons() }
 
 @Composable
-fun CustomTheme(
+fun GenuineTheme(
+    icons: GenuineIcons = GenuineTheme.icons,
     content: @Composable () -> Unit
 ) {
-    val customColors = CustomColors(
+    val genuineColors = GenuineColors(
         primary = Purple,
         font = White,
         positive = Green,
@@ -73,32 +75,26 @@ fun CustomTheme(
         foregroundMid = Gray,
         foregroundTop = LightGray
     )
-    val customTypography = CustomTypography(
+    val genuineTypography = GenuineTypography(
         body = TextStyle(fontSize = 16.sp),
         title = TextStyle(fontSize = 32.sp)
     )
-    val customElevation = CustomElevation(
-        default = 4.dp,
-        pressed = 8.dp
-    )
     CompositionLocalProvider(
-        LocalCustomColors provides customColors,
-        LocalCustomTypography provides customTypography,
-        LocalCustomElevation provides customElevation,
+        LocalGenuineColors provides genuineColors,
+        LocalGenuineTypography provides genuineTypography,
+        LocalGenuineIcons provides icons,
         content = content
     )
 }
 
-object CustomTheme {
-    val colors: CustomColors
+object GenuineTheme {
+    val colors: GenuineColors
         @Composable
-        get() = LocalCustomColors.current
-    val typography: CustomTypography
+        get() = LocalGenuineColors.current
+    val typography: GenuineTypography
         @Composable
-        get() = LocalCustomTypography.current
-    val elevation: CustomElevation
+        get() = LocalGenuineTypography.current
+    val icons: GenuineIcons
         @Composable
-        get() = LocalCustomElevation.current
-
-
+        get() = LocalGenuineIcons.current
 }

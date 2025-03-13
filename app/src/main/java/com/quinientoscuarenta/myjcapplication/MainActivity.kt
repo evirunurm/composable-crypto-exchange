@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.quinientoscuarenta.myjcapplication.ui.molecules.Header
 import com.quinientoscuarenta.myjcapplication.ui.organisms.CoinExchangeCalculator
 import com.quinientoscuarenta.myjcapplication.ui.organisms.ExchangeCoin
-import com.quinientoscuarenta.myjcapplication.ui.theme.CustomTheme
+import com.quinientoscuarenta.myjcapplication.ui.theme.GenuineTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             // Encapsulate the page in a Custom theme provider. Similar to how React Context works.
-            CustomTheme {
+            GenuineTheme {
                 // This app data is just to give a use example.
                 val coins: Array<ExchangeCoin> = arrayOf(
                     ExchangeCoin(
@@ -37,9 +37,9 @@ class MainActivity : ComponentActivity() {
                         coinImageVector = Icons.Default.AccountCircle
                     ),
                     ExchangeCoin(
-                        name = "BTH",
-                        value = 0.6948,
-                        balance = 0.6948,
+                        name = "USD",
+                        value = 1801.73,
+                        balance = 100.95,
                         coinImageVector = Icons.Default.AccountBox
                     )
                 )
@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                             // Set background to theme background color
-                            .background(CustomTheme.colors.background)
+                            .background(GenuineTheme.colors.background)
                             // Set inner padding passed by Scaffold,
                             // so that the content is not drawn under the status bar.
                             .padding(innerPadding)
@@ -59,7 +59,9 @@ class MainActivity : ComponentActivity() {
                             .padding(8.dp, 12.dp)
                     ) {
                         // Not using the AppBar provided by Scaffold, because the second page of the reference doesn't have it.
-                        Header("Exchange", onButtonClick = { /*TODO*/ })
+                        Header(onButtonClick = { /*TODO*/ }) {
+                            Title("Exchange")
+                        }
                         Spacer(Modifier.height(18.dp))
                         CoinExchangeCalculator(coins)
                     }

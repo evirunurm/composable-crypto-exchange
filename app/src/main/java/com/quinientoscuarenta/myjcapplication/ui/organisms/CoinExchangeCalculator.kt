@@ -9,16 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.quinientoscuarenta.myjcapplication.R
 import com.quinientoscuarenta.myjcapplication.ui.atoms.CircularButton
 import com.quinientoscuarenta.myjcapplication.ui.atoms.JCButton
 import com.quinientoscuarenta.myjcapplication.ui.atoms.JCText
 import com.quinientoscuarenta.myjcapplication.ui.molecules.ExchangeCard
 import com.quinientoscuarenta.myjcapplication.ui.molecules.ExchangeCardAction
-import com.quinientoscuarenta.myjcapplication.ui.theme.CustomTheme
+import com.quinientoscuarenta.myjcapplication.ui.theme.GenuineTheme
 
 @Composable
 fun CoinExchangeCalculator(
@@ -29,8 +27,7 @@ fun CoinExchangeCalculator(
     val primaryCoinActions: List<ExchangeCardAction> = listOf(
         ExchangeCardAction(
             description = "Send",
-            action = { /*TODO: Logic to send. */ },
-            primary = true
+            action = { /*TODO: Logic to send. */ }
         ),
         ExchangeCardAction(
             description = "Max",
@@ -41,13 +38,12 @@ fun CoinExchangeCalculator(
     val secondaryCoinActions: List<ExchangeCardAction> = listOf(
         ExchangeCardAction(
             description = "Receive",
-            action = { /*TODO: Logic to send. */ },
-            primary = true
+            action = { /*TODO: Logic to send. */ }
         ),
     )
 
     ConstraintLayout {
-        val (coin1Card, backButton, coin2Card, exchangeButton, SummaryCard) = createRefs()
+        val (coin1Card, backButton, coin2Card, exchangeButton) = createRefs()
 
         ExchangeCard(
             coinName = coin1.name,
@@ -78,11 +74,11 @@ fun CoinExchangeCalculator(
                 bottom.linkTo(coin2Card.bottom)
             },
             colors = IconButtonDefaults.iconButtonColors(
-                containerColor = CustomTheme.colors.foregroundTop
+                containerColor = GenuineTheme.colors.foregroundTop
             )
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_exchange_alt),
+                imageVector = GenuineTheme.icons.exchange,
                 tint = Color.White,
                 contentDescription = "Switch",
                 modifier = Modifier

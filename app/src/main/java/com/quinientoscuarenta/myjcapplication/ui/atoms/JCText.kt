@@ -14,13 +14,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import com.quinientoscuarenta.myjcapplication.ui.theme.CustomTheme
+import com.quinientoscuarenta.myjcapplication.ui.theme.GenuineTheme
 
 @Composable
 fun JCText(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = CustomTheme.colors.font,
+    color: Color = GenuineTheme.colors.font,
     fontSize: TextUnit = TextUnit.Unspecified,
     fontStyle: FontStyle? = null,
     fontWeight: FontWeight? = null,
