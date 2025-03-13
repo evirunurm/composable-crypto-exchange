@@ -20,7 +20,8 @@ import com.quinientoscuarenta.myjcapplication.ui.theme.GenuineTheme
 
 @Composable
 fun CoinExchangeCalculator(
-    coins: Array<ExchangeCoin>
+    coins: Array<ExchangeCoin>,
+    onSwitchCoins: () -> Unit
 ) {
     val coin1 = coins.first()
     val coin2 = coins.last()
@@ -66,7 +67,7 @@ fun CoinExchangeCalculator(
             },
         )
         CircularButton(
-            onClick = { /*TODO: Logic to switch places the coins. */ },
+            onClick = { onSwitchCoins() },
             modifier = Modifier.constrainAs(backButton) {
                 start.linkTo(coin1Card.start)
                 end.linkTo(coin2Card.end)
@@ -98,7 +99,7 @@ fun CoinExchangeCalculator(
 }
 
 
-data class ExchangeCoin(
+data class ExchangeCoin constructor(
     val name: String,
     val value: Double,
     val balance: Double,
