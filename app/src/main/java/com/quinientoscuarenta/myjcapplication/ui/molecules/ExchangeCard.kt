@@ -12,6 +12,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -66,26 +68,31 @@ fun ExchangeCard(
             }
         }
 
-    Column(
+    Card(
+        colors = CardDefaults.cardColors(
+            GenuineTheme.colors.foregroundMid,
+            GenuineTheme.colors.font
+        ),
+        shape = RoundedCornerShape(32.dp),
         modifier = modifier
-            .background(GenuineTheme.colors.foregroundMid, shape = RoundedCornerShape(32.dp))
-            .padding(8.dp)
     ) {
-        ExchangeCardHeader(
-            coinName = coinName,
-            coinImageVector = coinImageVector,
-            button = primaryButton,
-            modifier = Modifier.fillMaxWidth()
-        )
-        ExchangeCardContent(
-            coinValue = coinValue,
-            modifier = Modifier.fillMaxWidth(),
-            button = secondaryButton
-        )
-        ExchangeCardFooter(
-            coinBalance = coinBalance,
-            modifier = Modifier.fillMaxWidth()
-        )
+        Column(Modifier.padding(8.dp, 8.dp, 16.dp, 8.dp)) {
+            ExchangeCardHeader(
+                coinName = coinName,
+                coinImageVector = coinImageVector,
+                button = primaryButton,
+                modifier = Modifier.fillMaxWidth()
+            )
+            ExchangeCardContent(
+                coinValue = coinValue,
+                modifier = Modifier.fillMaxWidth(),
+                button = secondaryButton
+            )
+            ExchangeCardFooter(
+                coinBalance = coinBalance,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 

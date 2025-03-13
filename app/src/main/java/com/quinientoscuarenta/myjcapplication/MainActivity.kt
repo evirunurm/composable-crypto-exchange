@@ -55,7 +55,9 @@ class MainActivity : ComponentActivity() {
                 val onSwitchCoins = {
                     // We have to create a copy of the list to trigger a recomposition.
                     // This is because the list itself is not being modified, only its content.
-                    coins = coins.copyOf().apply { reverse() }
+                    coins = coins.copyOf().apply {
+                        reverse()
+                    }
                 }
 
                 // Scaffold is a pre-built layout that follows Material Design guidelines.
