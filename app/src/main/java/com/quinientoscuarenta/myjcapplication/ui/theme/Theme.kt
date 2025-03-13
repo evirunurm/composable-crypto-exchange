@@ -11,7 +11,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import com.quinientoscuarenta.myjcapplication.R
 
-// We create the different
+// We create the different subsystems of the theme.
 @Immutable
 data class GenuineColors(
     val primary: Color,
@@ -37,7 +37,7 @@ class GenuineIcons {
 
     val backArrow: ImageVector
         @Composable
-        get() = ImageVector.vectorResource(id = R.drawable.ic_exchange_alt)
+        get() = ImageVector.vectorResource(id = R.drawable.ic_exchange_alt) // I add the same icon for now
 }
 
 val LocalGenuineColors = staticCompositionLocalOf {
