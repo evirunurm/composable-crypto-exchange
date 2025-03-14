@@ -1,6 +1,7 @@
 package com.quinientoscuarenta.myjcapplication.ui.molecules
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,8 +15,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -30,7 +37,7 @@ import com.quinientoscuarenta.myjcapplication.R
 import com.quinientoscuarenta.myjcapplication.ui.atoms.ButtonVariant
 import com.quinientoscuarenta.myjcapplication.ui.atoms.ExchangeCardButton
 import com.quinientoscuarenta.myjcapplication.ui.atoms.JCText
-import com.quinientoscuarenta.myjcapplication.ui.theme.GenuineTheme
+import com.quinientoscuarenta.myjcapplication.ui.theme.LocalCustomColors
 
 data class ExchangeCardAction(
     val description: String,
@@ -47,6 +54,7 @@ fun ExchangeCard(
     modifier: Modifier = Modifier,
     actions: List<ExchangeCardAction> = listOf()
 ) {
+    var expanded by remember { mutableStateOf(false) }
     val primaryButton: @Composable ((Modifier) -> Unit)? = actions.firstOrNull { it.primary }?.let {
         @Composable { modifier: Modifier ->
             ExchangeCardButton(
@@ -70,8 +78,8 @@ fun ExchangeCard(
 
     Card(
         colors = CardDefaults.cardColors(
-            GenuineTheme.colors.foregroundMid,
-            GenuineTheme.colors.font
+            LocalCustomColors.current.neutral100,
+            LocalCustomColors.current.genericWhite
         ),
         shape = RoundedCornerShape(32.dp),
         modifier = modifier
@@ -81,6 +89,9 @@ fun ExchangeCard(
                 coinName = coinName,
                 coinImageVector = coinImageVector,
                 button = primaryButton,
+                onTitleClick = {
+                    expanded = true
+                },
                 modifier = Modifier.fillMaxWidth()
             )
             ExchangeCardContent(
@@ -91,6 +102,20 @@ fun ExchangeCard(
             ExchangeCardFooter(
                 coinBalance = coinBalance,
                 modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+    DropdownMenu(
+        expanded,
+        onDismissRequest = { expanded = false },
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        listOf("ETH", "BTC", "XRP").map {
+            DropdownMenuItem(
+                { JCText(it) },
+                onClick = {
+                    expanded = false
+                }
             )
         }
     }
@@ -153,6 +178,7 @@ fun ExchangeCardContent(
 fun ExchangeCardHeader(
     coinName: String,
     coinImageVector: ImageVector,
+    onTitleClick: () -> Unit,
     modifier: Modifier = Modifier,
     button: @Composable ((Modifier) -> Unit)? = {}
 ) {
@@ -171,6 +197,7 @@ fun ExchangeCardHeader(
         )
         ExchangeCardTitle(
             coinName = coinName,
+            onTitleClick = onTitleClick,
             modifier = Modifier.constrainAs(titleRef) {
                 start.linkTo(iconRef.end, 16.dp)
                 top.linkTo(parent.top)
@@ -185,19 +212,25 @@ fun ExchangeCardHeader(
     }
 }
 
+// Must be clickable
 @Composable
 fun ExchangeCardTitle(
     coinName: String,
+    onTitleClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier) {
+    Row(
+        modifier
+            .clickable { onTitleClick() }) {
         JCText(coinName, fontWeight = FontWeight.Normal, fontSize = 28.sp)
         Spacer(Modifier.width(8.dp))
         Icon(
             imageVector = Icons.Rounded.KeyboardArrowDown,
             contentDescription = coinName,
             tint = Color.White,
-            modifier = Modifier.alpha(0.4f)
+            modifier = Modifier
+                .alpha(0.4f)
+                .align(Alignment.CenterVertically)
         )
     }
 }

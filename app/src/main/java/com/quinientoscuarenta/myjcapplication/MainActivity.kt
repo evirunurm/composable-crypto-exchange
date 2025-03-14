@@ -24,6 +24,8 @@ import com.quinientoscuarenta.myjcapplication.ui.molecules.Header
 import com.quinientoscuarenta.myjcapplication.ui.organisms.CoinExchangeCalculator
 import com.quinientoscuarenta.myjcapplication.ui.organisms.ExchangeCoin
 import com.quinientoscuarenta.myjcapplication.ui.theme.GenuineTheme
+import com.quinientoscuarenta.myjcapplication.ui.theme.LocalCustomColors
+import com.quinientoscuarenta.myjcapplication.ui.theme.customColorsScheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +33,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             // Encapsulate the page in a Custom theme provider. Similar to how React Context works.
-            GenuineTheme {
+            GenuineTheme(customColorsScheme()) {
                 // This app data is just to give a use example.
                 var coins by rememberSaveable {
                     mutableStateOf(
@@ -68,7 +70,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                             // Set background to theme background color
-                            .background(GenuineTheme.colors.background)
+                            .background(LocalCustomColors.current.genericBlack)
                             // Set inner padding passed by Scaffold,
                             // so that the content is not drawn under the status bar.
                             .padding(innerPadding)

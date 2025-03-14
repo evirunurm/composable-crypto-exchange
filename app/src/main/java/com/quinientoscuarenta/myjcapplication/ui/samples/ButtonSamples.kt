@@ -6,7 +6,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.quinientoscuarenta.myjcapplication.ui.atoms.JCButton
 
 @Preview
-//@Sampled
 @Composable
 fun ButtonSample() {
     JCButton(onClick = { /* Do something! */ }) { Text("Button") }

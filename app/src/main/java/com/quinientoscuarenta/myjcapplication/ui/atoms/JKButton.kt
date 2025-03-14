@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import com.quinientoscuarenta.myjcapplication.ui.theme.GenuineTheme
+import com.quinientoscuarenta.myjcapplication.ui.theme.LocalCustomColors
 
 /**
  *
@@ -49,8 +49,8 @@ fun JCButton(
     enabled: Boolean = true,
     shape: Shape = ButtonDefaults.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(
-        contentColor = GenuineTheme.colors.font,
-        containerColor = GenuineTheme.colors.primary
+        contentColor = LocalCustomColors.current.genericWhite,
+        containerColor = LocalCustomColors.current.brand100
     ),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,

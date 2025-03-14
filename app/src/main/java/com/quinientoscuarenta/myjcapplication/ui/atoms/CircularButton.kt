@@ -8,7 +8,7 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.quinientoscuarenta.myjcapplication.ui.theme.GenuineTheme
+import com.quinientoscuarenta.myjcapplication.ui.theme.LocalCustomColors
 
 @Composable
 fun CircularButton(
@@ -19,8 +19,8 @@ fun CircularButton(
     enabled: Boolean = true,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(
         // Colors are set to theme colors
-        contentColor = GenuineTheme.colors.font,
-        containerColor = GenuineTheme.colors.foregroundMid,
+        contentColor = LocalCustomColors.current.genericWhite,
+        containerColor = LocalCustomColors.current.neutral100,
     ),
     interactionSource: MutableInteractionSource? = null,
     content: @Composable () -> Unit

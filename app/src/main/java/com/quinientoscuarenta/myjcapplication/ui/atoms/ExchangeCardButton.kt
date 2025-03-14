@@ -7,7 +7,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.quinientoscuarenta.myjcapplication.ui.theme.GenuineTheme
+import com.quinientoscuarenta.myjcapplication.ui.theme.LocalCustomColors
 
 // TODO: Isolate this into a JKButton
 @Composable
@@ -22,13 +22,13 @@ fun ExchangeCardButton(
         MaterialTheme.colorScheme.onTertiary.copy(alpha = 0.1f)
     )
     val containerColor =
-        if (variant == ButtonVariant.Filled) GenuineTheme.colors.positive.run {
+        if (variant == ButtonVariant.Filled) LocalCustomColors.current.brand100.run {
             copy(alpha = 0.2f)
         }
-        else GenuineTheme.colors.foregroundMid
+        else LocalCustomColors.current.neutral100
     val contentColor =
-        if (variant == ButtonVariant.Filled) GenuineTheme.colors.positive
-        else GenuineTheme.colors.font
+        if (variant == ButtonVariant.Filled) LocalCustomColors.current.brand100
+        else LocalCustomColors.current.genericWhite
 
     OutlinedButton(
         onClick,

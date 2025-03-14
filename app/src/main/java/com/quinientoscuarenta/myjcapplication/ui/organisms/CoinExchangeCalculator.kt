@@ -2,6 +2,8 @@ package com.quinientoscuarenta.myjcapplication.ui.organisms
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
@@ -16,7 +18,7 @@ import com.quinientoscuarenta.myjcapplication.ui.atoms.JCButton
 import com.quinientoscuarenta.myjcapplication.ui.atoms.JCText
 import com.quinientoscuarenta.myjcapplication.ui.molecules.ExchangeCard
 import com.quinientoscuarenta.myjcapplication.ui.molecules.ExchangeCardAction
-import com.quinientoscuarenta.myjcapplication.ui.theme.GenuineTheme
+import com.quinientoscuarenta.myjcapplication.ui.theme.LocalCustomColors
 
 @Composable
 fun CoinExchangeCalculator(
@@ -75,11 +77,11 @@ fun CoinExchangeCalculator(
                 bottom.linkTo(coin2Card.bottom)
             },
             colors = IconButtonDefaults.iconButtonColors(
-                containerColor = GenuineTheme.colors.foregroundTop
+                containerColor = LocalCustomColors.current.neutral100
             )
         ) {
             Icon(
-                imageVector = GenuineTheme.icons.exchange,
+                imageVector = Icons.Default.AccountCircle,
                 tint = Color.White,
                 contentDescription = "Switch",
                 modifier = Modifier
