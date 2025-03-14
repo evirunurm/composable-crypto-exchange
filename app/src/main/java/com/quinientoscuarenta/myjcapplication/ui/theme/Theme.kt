@@ -28,15 +28,15 @@ class SemanticColors(
     val containerBackgroundDefault: Color
 )
 
-//@Immutable
-//data class ComponentColors(
-//    val buttonBackgroundPrimaryDefault: Color,
-//    val buttonBackgroundPrimaryDisabled: Color,
-//    val buttonBackgroundPrimaryError: Color,
-//    val buttonBackgroundSecondaryDefault: Color,
-//    val buttonBackgroundSecondaryDisabled: Color,
-//    val buttonBackgroundSecondaryError: Color,
-//)
+@Immutable
+data class ComponentColors(
+    val buttonBackgroundPrimaryDefault: Color,
+    val buttonBackgroundPrimaryDisabled: Color,
+    val buttonBackgroundPrimaryError: Color,
+    val buttonBackgroundSecondaryDefault: Color,
+    val buttonBackgroundSecondaryDisabled: Color,
+    val buttonBackgroundSecondaryError: Color,
+)
 
 // Returns a instance of all Core colors, taken from tokens.
 fun coreColorsScheme(): ColorScheme {
@@ -84,20 +84,38 @@ fun semanticColorsScheme(
     )
 }
 
+fun componentColorsScheme(
+    // ?? Provide by default. Not sure if this makes sense.
+    // Just so it can be called without parameters during LocalSemanticColors initialization.
+    colorScheme: ColorScheme = customColorsScheme()
+): ComponentColors {
+    return ComponentColors(
+        buttonBackgroundPrimaryDefault = colorScheme.brand100,
+        buttonBackgroundPrimaryDisabled = colorScheme.brand100,
+        buttonBackgroundPrimaryError = colorScheme.red100,
+        buttonBackgroundSecondaryDefault = colorScheme.secondary100,
+        buttonBackgroundSecondaryDisabled = colorScheme.secondary100,
+        buttonBackgroundSecondaryError = colorScheme.red100
+    )
+}
+
 val LocalCustomColors = compositionLocalOf { customColorsScheme() }
 val LocalSemanticColors = compositionLocalOf { semanticColorsScheme() }
+val LocalComponentColors = compositionLocalOf { componentColorsScheme() }
 
 @Composable
 fun GenuineTheme(
     customColors: ColorScheme,
     content: @Composable () -> Unit
 ) {
-    // With the passed custom colors, generate the semantic colors, etc
+    // With the passed custom colors, generate the semantic, component, state, etc colors.
     val semanticColors = semanticColorsScheme(customColors)
+    val componentColors = componentColorsScheme(customColors)
 
     CompositionLocalProvider(
         LocalCustomColors provides customColors,
         LocalSemanticColors provides semanticColors,
+        LocalComponentColors provides componentColors,
         content = content
     )
 }
@@ -105,6 +123,12 @@ fun GenuineTheme(
 // Why is this used? To have everything centralized in a single object, maybe?
 object GenuineTheme {
     val customColors: ColorScheme
+        @Composable
+        get() = LocalCustomColors.current
+    val semanticColors: ColorScheme
+        @Composable
+        get() = LocalCustomColors.current
+    val componentColors: ColorScheme
         @Composable
         get() = LocalCustomColors.current
 }
